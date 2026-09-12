@@ -1,0 +1,49 @@
+/* ── Animation utilities ─────────────────────────────────────────
+   Small, composable classes — apply them to any element instead of
+   writing one-off keyframes per component. Add/remove a class name
+   to turn an animation on or off. */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+.fade-in {
+  animation: fadeIn var(--transition-slow) ease both;
+}
+
+.pop-in {
+  animation: popIn var(--transition-base) ease both;
+}
+
+.slide-up {
+  animation: slideUp var(--transition-base) ease both;
+}
+
+.sway {
+  animation: sway 3s ease-in-out infinite;
+}
+
+/* Apply to any interactive element for a gentle "press" feedback,
+   instead of writing :active states by hand each time. */
+.press {
+  transition: transform var(--transition-fast);
+}
+.press:active {
+  transform: scale(0.96);
+}

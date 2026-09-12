@@ -1,0 +1,57 @@
+.progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.progress-label {
+  font-size: var(--text-xs);
+  color: var(--soil-brown-soft);
+  font-weight: 700;
+}
+
+.progress-track {
+  background: var(--cream);
+  border-radius: var(--radius-full);
+  height: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-inset);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Diagonal shine sweep — a small extra bit of "juice" on the XP bar so
+   filling it up reads as a reward rather than a plain loading bar. */
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 45%,
+    transparent 60%
+  );
+  animation: progressShine 2.2s ease-in-out infinite;
+}
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-butter {
+  background: var(--gradient-reward);
+  box-shadow: var(--glow-butter);
+}
+.progress-sage {
+  background: var(--gradient-primary);
+}
+.progress-pink {
+  background: var(--terracotta-pink);
+}

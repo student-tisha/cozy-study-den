@@ -1,0 +1,31 @@
+.evolution-banner-overlay {
+  position: fixed;
+  top: var(--space-5);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.evolution-banner {
+  pointer-events: auto;
+  text-align: center;
+  background: var(--card-white);
+  border: 2px solid var(--butter);
+  max-width: 320px;
+}
+
+.evolution-banner-emoji {
+  font-size: 2rem;
+}
+
+.evolution-banner h3 {
+  margin: var(--space-2) 0 var(--space-1);
+}
+
+.evolution-banner p {
+  color: var(--soil-brown-soft);
+  font-size: var(--text-sm);
+}

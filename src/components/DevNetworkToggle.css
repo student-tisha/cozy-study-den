@@ -1,0 +1,23 @@
+.dev-network-toggle {
+  position: fixed;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  z-index: 200;
+  background: var(--soil-brown);
+  color: var(--card-white);
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.85;
+  box-shadow: var(--shadow-soft);
+}
+
+.dev-network-toggle select {
+  font-size: var(--text-xs);
+  border-radius: var(--radius-sm);
+  border: none;
+  padding: 2px 4px;
+}

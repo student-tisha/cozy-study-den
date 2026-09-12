@@ -1,0 +1,41 @@
+.dashboard {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-7);
+}
+
+.dashboard-header {
+  margin-bottom: var(--space-5);
+}
+
+.dashboard-header h1 {
+  margin-bottom: var(--space-1);
+}
+
+.dashboard-motivation {
+  color: var(--soil-brown-soft);
+  font-size: var(--text-base);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+/* Tablet: keep two columns but let them share space more evenly */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobile: companion on top, tasks below */
+@media (max-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-header h1 {
+    font-size: var(--text-xl);
+  }
+}

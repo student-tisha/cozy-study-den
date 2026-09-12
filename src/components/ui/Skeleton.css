@@ -1,0 +1,24 @@
+/* Cozy shimmer: a soft sage-tinted gradient sweeping left→right,
+   slow (1.8s) and low-contrast so it reads as "gently breathing"
+   rather than a harsh loading-bar flash. The global
+   prefers-reduced-motion rule in theme.css already freezes this. */
+
+.skeleton-block {
+  background: linear-gradient(
+    100deg,
+    var(--sage-light) 30%,
+    var(--cream) 50%,
+    var(--sage-light) 70%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.8s ease-in-out infinite;
+}
+
+.skeleton-circle {
+  border-radius: var(--radius-full);
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

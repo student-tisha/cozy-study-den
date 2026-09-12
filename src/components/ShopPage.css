@@ -1,0 +1,70 @@
+.shop-page {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-7);
+}
+
+.shop-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+
+.shop-category {
+  margin-top: var(--space-6);
+}
+
+.shop-category-title {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+}
+
+.shop-item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-4);
+}
+
+.shop-item-card {
+  text-align: center;
+  position: relative;
+}
+
+.shop-item-equipped-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+}
+
+.shop-item-icon {
+  font-size: 2.2rem;
+  margin-bottom: var(--space-2);
+}
+
+.shop-item-name {
+  font-weight: 700;
+}
+
+.shop-item-price {
+  color: var(--soil-brown-soft);
+  font-size: var(--text-sm);
+  margin: var(--space-1) 0 var(--space-3);
+}
+
+/* Satisfying-but-subtle purchase feedback: a brief golden glow + pop,
+   not a screen-filling confetti explosion. */
+@keyframes shopItemBought {
+  0% { transform: scale(1); box-shadow: var(--shadow-soft); }
+  40% { transform: scale(1.04); box-shadow: 0 0 0 4px var(--butter), var(--shadow-soft-hover); }
+  100% { transform: scale(1); box-shadow: var(--shadow-soft); }
+}
+
+.shop-item-bought {
+  animation: shopItemBought 0.6s ease;
+}
+
+@media (max-width: 640px) {
+  .shop-item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}

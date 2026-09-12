@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* ── Color palette ────────────────────────────────────────────── */
+  /* Same variable names as before (so every component that already
+     references them just gets brighter for free) — values pushed
+     from a muted/earthy palette to a saturated, "dopamine" one. */
+  --cream: #FFF3E0;            /* app background */
+  --card-white: #FFFFFF;       /* card surfaces — pure white pops harder against saturated accents */
+  --sage: #33B679;             /* primary accent (leaf/growth) — vivid grass green */
+  --sage-dark: #1F9760;        /* primary accent, hover/pressed */
+  --sage-light: #D3F7E4;       /* primary accent, tints/backgrounds */
+  --terracotta-pink: #FF6F91;  /* secondary accent (reward/flower) — vivid coral-pink */
+  --terracotta-pink-dark: #F04770;
+  --butter: #FFC93C;           /* highlight accent (XP/streak) — vivid gold */
+  --butter-dark: #F5A623;
+  --violet: #8B5CF6;           /* celebration / level-up accent */
+  --violet-dark: #7440E0;
+  --sky: #3EC6E0;              /* extra playful accent (shop variety, links) */
+  --soil-brown: #33241A;       /* primary text — darker for more contrast/pop */
+  --soil-brown-soft: #8A7565;  /* secondary/muted text */
+  --line: rgba(51, 36, 26, 0.14); /* hairline borders */
+  --error: #FF5A5F;
+  --success: #35C77E;
+
+  /* ── Gradients & glow (new — additive, nothing removed) ────────── */
+  --gradient-bg: linear-gradient(180deg, #FFF8ED 0%, #FFE8CC 100%);
+  --gradient-primary: linear-gradient(135deg, #3DDB8F, #1F9760);
+  --gradient-reward: linear-gradient(135deg, #FFD35C, #FF6F91);
+  --gradient-celebrate: linear-gradient(135deg, #8B5CF6, #FF6F91);
+  --glow-butter: 0 0 0 4px rgba(255, 201, 60, 0.35), 0 10px 22px rgba(245, 166, 35, 0.35);
+  --glow-violet: 0 0 0 4px rgba(139, 92, 246, 0.3), 0 10px 24px rgba(139, 92, 246, 0.35);
+  --shadow-pop: 0 6px 0 rgba(51, 36, 26, 0.15);
+
+  /* ── Typography ───────────────────────────────────────────────── */
+  --font-heading: 'Baloo 2', sans-serif;  /* chunky, bouncy — reads as playful/game-like */
+  --font-body: 'Poppins', sans-serif;     /* clean geometric sans, stays readable at small sizes */
+
+  --text-xs: 0.75rem;   /* 12px — badges, fine print */
+  --text-sm: 0.875rem;  /* 14px — secondary text, labels */
+  --text-base: 1rem;    /* 16px — body */
+  --text-lg: 1.125rem;  /* 18px — card titles */
+  --text-xl: 1.375rem;  /* 22px — section headings */
+  --text-2xl: 1.75rem;  /* 28px — page headings */
+
+  /* ── Spacing scale (use for margin/padding/gap) ──────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* ── Shape ────────────────────────────────────────────────────── */
+  --radius-sm: 14px;   /* inputs, badges */
+  --radius-md: 20px;   /* buttons, list rows */
+  --radius-lg: 32px;   /* cards */
+  --radius-full: 999px; /* pills, avatars */
+
+  /* ── Elevation ────────────────────────────────────────────────── */
+  --shadow-soft: 0 8px 24px rgba(51, 36, 26, 0.10);
+  --shadow-soft-hover: 0 12px 30px rgba(51, 36, 26, 0.16);
+  --shadow-inset: inset 0 0 0 1px var(--line);
+
+  /* ── Motion ───────────────────────────────────────────────────── */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.5s ease;
+  --transition-bounce: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); /* playful overshoot for pops/presses */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--gradient-bg);
+  color: var(--soil-brown);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  margin: 0;
+  color: var(--soil-brown);
+}
+
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); }
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+/* ── Responsive spacing helper ──────────────────────────────────
+   A single container class so every page/section shares the same
+   max-width and side padding instead of redefining it per component. */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+
+@media (max-width: 720px) {
+  .container {
+    padding: 0 var(--space-4);
+  }
+}
+
+/* Respect reduced-motion preference (accessibility floor) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
