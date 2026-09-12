@@ -65,7 +65,7 @@ export default function ShopPage() {
         return (
           <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', padding: 10, borderBottom: '1px solid #ccc' }}>
             <span>{item.name} — {item.cost} coins</span>
-            <button onClick={() => buyItem(item)} disabled={owned}>
+            <button onClick={() => buyItem(item)} disabled={owned} aria-label={`Buy ${item.name}`}>
               {owned ? 'Owned' : 'Buy'}
             </button>
           </div>

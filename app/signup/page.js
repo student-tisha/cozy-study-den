@@ -28,8 +28,8 @@ export default function SignupPage() {
     <div style={{ maxWidth: 400, margin: '80px auto', padding: 20 }}>
       <h1>Sign Up</h1>
       <form onSubmit={handleSignup}>
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ display: 'block', width: '100%', marginBottom: 10, padding: 8 }} />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ display: 'block', width: '100%', marginBottom: 10, padding: 8 }} />
+        <input type="email" placeholder="Email" aria-label="Email address" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ display: 'block', width: '100%', marginBottom: 10, padding: 8 }} />
+        <input type="password" placeholder="Password" aria-label="Password" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ display: 'block', width: '100%', marginBottom: 10, padding: 8 }} />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit" style={{ padding: '8px 16px' }}>Sign Up</button>
       </form>

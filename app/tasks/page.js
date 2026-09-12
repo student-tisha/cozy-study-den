@@ -122,11 +122,12 @@ export default function TasksPage() {
         <input
           type="text"
           placeholder="New quest..."
+          aria-label="New quest title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           style={{ padding: 8, marginRight: 8 }}
         />
-        <select value={attribute} onChange={(e) => setAttribute(e.target.value)} style={{ padding: 8, marginRight: 8 }}>
+        <select value={attribute} onChange={(e) => setAttribute(e.target.value)} aria-label="Quest attribute category" style={{ padding: 8, marginRight: 8 }}>
           <option>Focus</option>
           <option>Intellect</option>
           <option>Wellness</option>
@@ -140,10 +141,10 @@ export default function TasksPage() {
             {task.title} ({task.attribute}) — {task.xp_value} XP
           </span>
           <div>
-            <button onClick={() => completeTask(task)} disabled={task.is_completed} style={{ marginRight: 8 }}>
-              {task.is_completed ? 'Done' : 'Complete'}
+            <button onClick={() => completeTask(task)} disabled={task.is_completed} aria-label={`Complete quest: ${task.title}`} style={{ marginRight: 8 }}>
+             {task.is_completed ? 'Done' : 'Complete'}
             </button>
-            <button onClick={() => deleteTask(task.id)}>Delete</button>
+            <button onClick={() => deleteTask(task.id)} aria-label={`Delete quest: ${task.title}`}>Delete</button>
           </div>
         </div>
       ))}
