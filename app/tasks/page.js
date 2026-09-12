@@ -65,7 +65,8 @@ export default function TasksPage() {
     // fetch current profile
     const { data: profile } = await supabase
       .from('profiles')
-      .select('level, xp, streak_count, last_active_date')
+      //.select('level, xp, streak_count, last_active_date')
+      .select('level, xp, streak_count, last_active_date, currency')
       .eq('id', userId)
       .single()
 
@@ -73,9 +74,15 @@ export default function TasksPage() {
     const { streak, lastActiveDate } = calculateStreak(profile.last_active_date, profile.streak_count)
 
     await supabase
-      .from('profiles')
-      .update({ level, xp, streak_count: streak, last_active_date: lastActiveDate })
-      .eq('id', userId)
+  .from('profiles')
+  .update({
+    level,
+    xp,
+    streak_count: streak,
+    last_active_date: lastActiveDate,
+    currency: profile.currency + 5
+  })
+  .eq('id', userId)
 
     // find or create the attribute row for this task's attribute
     let { data: attrRow } = await supabase
