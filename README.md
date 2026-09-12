@@ -1,39 +1,70 @@
+# Cozy Study Den
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+A gamified task tracker: complete daily tasks ("quests"), keep your streak
+alive, and level up. Earn coins per completed task and spend them in the
+shop on cosmetic items.
 
-## Getting Started
+## Tech stack
 
-First, run the development server:
+- **Next.js (App Router)** — `app/` directory
+- **Supabase** — Postgres DB, auth (`supabase.auth`), row-level security
+- **Framer Motion** — level-up celebration animation
+- **Tailwind v4** — via `@import "tailwindcss"` in `app/globals.css`; cozy
+  pastel theme tokens live alongside it as CSS variables
+
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env.local   # fill in your Supabase project values
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Data model (Supabase tables)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `profiles` — id, username, level, xp, currency, streak_count, last_active_date
+- `tasks` — id, user_id, title, attribute, xp_value, is_completed, completed_at
+- `attributes` — id, user_id, attribute_name, attribute_level, attribute_xp
+- `inventory` — id, user_id, item_name, item_type
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  login/page.js        Login screen (Supabase auth.signInWithPassword)
+  signup/page.js        Signup screen (Supabase auth.signUp + profile row)
+  dashboard/page.js    Profile summary, attributes
+  tasks/page.js         Quest list, XP/streak logic, level-up trigger
+  shop/page.js           Currency + inventory, cosmetic purchases
+components/
+  AuthField.jsx          Shared labeled input for login/signup
+  LevelUpCelebration.jsx  Reusable Framer Motion level-up modal
+lib/
+  supabaseClient.js      Supabase client init
+  gameLogic.js             Pure XP/leveling and streak functions
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Team
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Person | Area |
+|---|---|
+| Tisha | Backend, DB schema, auth, XP/streak logic (`lib/gameLogic.js`, Supabase wiring) |
+| Sankur | Frontend core (dashboard, task list), currency/shop backend logic |
+| Dipan | Login/signup + shop UI polish, level-up animation, accessibility, docs |
 
-## Deploy on Vercel
+## Accessibility
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- All form inputs have associated `<label>` elements.
+- Errors and shop feedback are announced via `aria-live` regions instead of
+  blocking `alert()` popups.
+- The level-up modal traps focus, is dismissible with `Escape`, uses
+  `role="dialog"` + `aria-modal`, and respects `prefers-reduced-motion`.
+- All interactive elements get a visible focus ring (`.cozy-focusable` in
+  `globals.css`) for keyboard navigation.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Demo video
 
-
+90–180s walkthrough: login/signup → complete a quest → level-up animation →
+shop purchase.
