@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabaseClient'
 import { applyXp, calculateStreak } from '../../lib/gameLogic'
+import LevelUpCelebration from '../../components/LevelUpCelebration'
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState([])
   const [title, setTitle] = useState('')
   const [attribute, setAttribute] = useState('Focus')
   const [userId, setUserId] = useState(null)
+  const [levelUp, setLevelUp] = useState({ show: false, level: null })
   const router = useRouter()
 
   useEffect(() => {
@@ -109,7 +111,7 @@ export default function TasksPage() {
       .eq('id', attrRow.id)
 
     if (leveledUp) {
-      alert(`🎉 Level Up! You are now Level ${level}!`)
+      setLevelUp({ show: true, level })
     } else {
       alert(`+${task.xp_value} XP earned!`)
     }
@@ -148,6 +150,12 @@ export default function TasksPage() {
           </div>
         </div>
       ))}
+
+      <LevelUpCelebration
+        show={levelUp.show}
+        level={levelUp.level}
+        onDismiss={() => setLevelUp({ show: false, level: null })}
+      />
     </div>
   )
 }
