@@ -1,9 +1,8 @@
 'use client'
-import { applyXp } from '../../lib/gameLogic'
-
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabaseClient'
+import { applyXp, calculateStreak } from '../../lib/gameLogic'
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState([])
@@ -53,36 +52,61 @@ export default function TasksPage() {
     setTasks(tasks.filter(t => t.id !== id))
   }
 
- const completeTask = async (task) => {
-  if (task.is_completed) return
+  const completeTask = async (task) => {
+    if (task.is_completed) return
 
-  // mark task done
-  await supabase
-    .from('tasks')
-    .update({ is_completed: true, completed_at: new Date().toISOString() })
-    .eq('id', task.id)
-  setTasks(tasks.map(t => t.id === task.id ? { ...t, is_completed: true } : t))
+    // mark task done
+    await supabase
+      .from('tasks')
+      .update({ is_completed: true, completed_at: new Date().toISOString() })
+      .eq('id', task.id)
+    setTasks(tasks.map(t => t.id === task.id ? { ...t, is_completed: true } : t))
 
-  // fetch current profile
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('level, xp')
-    .eq('id', userId)
-    .single()
+    // fetch current profile
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('level, xp, streak_count, last_active_date')
+      .eq('id', userId)
+      .single()
 
-  const { level, xp, leveledUp } = applyXp(profile.level, profile.xp, task.xp_value)
+    const { level, xp, leveledUp } = applyXp(profile.level, profile.xp, task.xp_value)
+    const { streak, lastActiveDate } = calculateStreak(profile.last_active_date, profile.streak_count)
 
-  await supabase
-    .from('profiles')
-    .update({ level, xp })
-    .eq('id', userId)
+    await supabase
+      .from('profiles')
+      .update({ level, xp, streak_count: streak, last_active_date: lastActiveDate })
+      .eq('id', userId)
 
-  if (leveledUp) {
-    alert(`🎉 Level Up! You are now Level ${level}!`)
-  } else {
-    alert(`+${task.xp_value} XP earned!`)
+    // find or create the attribute row for this task's attribute
+    let { data: attrRow } = await supabase
+      .from('attributes')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('attribute_name', task.attribute)
+      .single()
+
+    if (!attrRow) {
+      const { data: newAttr } = await supabase
+        .from('attributes')
+        .insert({ user_id: userId, attribute_name: task.attribute })
+        .select()
+        .single()
+      attrRow = newAttr
+    }
+
+    const attrResult = applyXp(attrRow.attribute_level, attrRow.attribute_xp, task.xp_value)
+
+    await supabase
+      .from('attributes')
+      .update({ attribute_level: attrResult.level, attribute_xp: attrResult.xp })
+      .eq('id', attrRow.id)
+
+    if (leveledUp) {
+      alert(`🎉 Level Up! You are now Level ${level}!`)
+    } else {
+      alert(`+${task.xp_value} XP earned!`)
+    }
   }
-}
 
   return (
     <div style={{ maxWidth: 600, margin: '60px auto', padding: 20 }}>

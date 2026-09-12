@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabaseClient'
 
 export default function DashboardPage() {
   const [profile, setProfile] = useState(null)
+  const [attributes, setAttributes] = useState([])
   const router = useRouter()
 
   useEffect(() => {
@@ -15,19 +16,21 @@ export default function DashboardPage() {
         return
       }
 
-      let { data, error } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+      let { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
 
       if (!data) {
-        const { data: newProfile, error: insertError } = await supabase
+        const { data: newProfile } = await supabase
           .from('profiles')
           .insert({ id: user.id, username: user.email.split('@')[0] })
           .select()
           .single()
-        console.log('INSERT RESULT:', newProfile, insertError)
         data = newProfile
       }
 
       setProfile(data)
+
+      const { data: attrs } = await supabase.from('attributes').select('*').eq('user_id', user.id)
+      setAttributes(attrs || [])
     }
     loadProfile()
   }, [])
@@ -40,6 +43,12 @@ export default function DashboardPage() {
       <p>Level: {profile.level}</p>
       <p>XP: {profile.xp}</p>
       <p>Currency: {profile.currency}</p>
+      <p>Streak: {profile.streak_count} days 🔥</p>
+
+      <h2>Attributes</h2>
+      {attributes.map(attr => (
+        <p key={attr.id}>{attr.attribute_name}: Level {attr.attribute_level} ({attr.attribute_xp} XP)</p>
+      ))}
     </div>
   )
 }
