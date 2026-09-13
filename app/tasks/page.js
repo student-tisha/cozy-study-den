@@ -159,9 +159,14 @@ export default function TasksPage() {
       <div className="mx-auto max-w-2xl">
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-[var(--cozy-ink)]">
+          {/* <h1 className="text-4xl font-bold text-[var(--cozy-ink)]">
             Your Quests
-          </h1>
+          </h1> */}
+          <nav style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
+           <a href="/dashboard" style={{ padding: '8px 16px', background: '#eee', borderRadius: 8, textDecoration: 'none', color: '#333', fontSize: 14 }}>Dashboard</a>
+           <a href="/shop" style={{ padding: '8px 16px', background: '#eee', borderRadius: 8, textDecoration: 'none', color: '#333', fontSize: 14 }}>Shop</a>
+           </nav>
+            <h1>Your Quests</h1>
 
           <p className="mt-2 text-[var(--cozy-ink-soft)]">
             Complete quests, earn XP, and level up.

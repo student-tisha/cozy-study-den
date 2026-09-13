@@ -46,6 +46,10 @@ export default function DashboardPage() {
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--cozy-bg)', color: 'var(--cozy-ink)', padding: '32px 20px' }}>
       <div style={{ maxWidth: 600, margin: '0 auto' }}>
+        <nav style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
+          <a href="/tasks" style={{ padding: '8px 16px', background: 'var(--cozy-surface)', border: '1px solid var(--cozy-border)', borderRadius: 'var(--cozy-radius-md)', color: 'var(--cozy-ink)', textDecoration: 'none', fontSize: 14 }}>Quests</a>
+          <a href="/shop" style={{ padding: '8px 16px', background: 'var(--cozy-surface)', border: '1px solid var(--cozy-border)', borderRadius: 'var(--cozy-radius-md)', color: 'var(--cozy-ink)', textDecoration: 'none', fontSize: 14 }}>Shop</a>
+          </nav>
         <h1 style={{ fontSize: 28, marginBottom: 4 }}>Welcome, {profile.username} 🌿</h1>
         <p style={{ color: 'var(--cozy-ink-soft)', marginBottom: 24 }}>Here's how your den is growing.</p>
 

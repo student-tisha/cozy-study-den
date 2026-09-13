@@ -66,9 +66,15 @@ export default function ShopPage() {
     )
   }
 
-  return (
+  
+      return (
     <div style={{ minHeight: '100dvh', background: 'var(--cozy-bg)', color: 'var(--cozy-ink)', padding: '32px 20px' }}>
       <div style={{ maxWidth: 640, margin: '0 auto' }}>
+        <nav style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
+          <a href="/dashboard" style={{ padding: '8px 16px', background: 'var(--cozy-surface)', border: '1px solid var(--cozy-border)', borderRadius: 'var(--cozy-radius-md)', color: 'var(--cozy-ink)', textDecoration: 'none', fontSize: 14 }}>Dashboard</a>
+          <a href="/tasks" style={{ padding: '8px 16px', background: 'var(--cozy-surface)', border: '1px solid var(--cozy-border)', borderRadius: 'var(--cozy-radius-md)', color: 'var(--cozy-ink)', textDecoration: 'none', fontSize: 14 }}>Quests</a>
+        </nav>
+
         <header style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 24 }}>
           <h1 style={{ fontSize: 26, margin: 0 }}>Shop</h1>
           <span
