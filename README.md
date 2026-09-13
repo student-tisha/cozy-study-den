@@ -1,70 +1,77 @@
-# Cozy Study Den
+# Cozy Study Den 🌿
 
-A gamified task tracker: complete daily tasks ("quests"), keep your streak
-alive, and level up. Earn coins per completed task and spend them in the
-shop on cosmetic items.
+A gamified productivity app that turns your daily tasks into quests. Complete quests to earn XP, level up, build streaks, grow your attributes, and spend coins in the shop.
 
-## Tech stack
+## Features
 
-- **Next.js (App Router)** — `app/` directory
-- **Supabase** — Postgres DB, auth (`supabase.auth`), row-level security
-- **Framer Motion** — level-up celebration animation
-- **Tailwind v4** — via `@import "tailwindcss"` in `app/globals.css`; cozy
-  pastel theme tokens live alongside it as CSS variables
+- Secure authentication (signup/login) with Supabase Auth
+- Task ("Quest") management: create, complete, delete
+- Non-linear XP and leveling system
+- Daily streak tracking
+- Attribute leveling (tasks contribute XP to specific stats like Focus, Intellect, Wellness)
+- In-app currency and shop for cosmetic items
+- Row-Level Security: users can only access their own data
+- Fully responsive, accessible UI with keyboard navigation support
 
-## Getting started
+## Tech Stack
 
-```bash
+- **Frontend/Backend:** Next.js (App Router)
+- **Database & Auth:** Supabase (PostgreSQL + Auth + Row Level Security)
+- **Styling:** Custom CSS with cozy theme variables
+- **Hosting:** Vercel
+
+## Live Demo
+
+[cozy-study-den.vercel.app](https://cozy-study-den.vercel.app/)
+
+## Setup Instructions
+
+### 1. Clone the repository
+\`\`\`bash
+git clone https://github.com/student-tisha/cozy-study-den.git
+cd cozy-study-den
+\`\`\`
+
+### 2. Install dependencies
+\`\`\`bash
 npm install
-cp .env.example .env.local   # fill in your Supabase project values
+\`\`\`
+
+### 3. Set up Supabase
+- Create a project at [supabase.com](https://supabase.com)
+- In the SQL Editor or Table Editor, create four tables: `profiles`, `tasks`, `attributes`, `inventory` (see schema below)
+- Enable Row Level Security on all tables with policies restricting access to `auth.uid() = user_id` (or `= id` for `profiles`)
+
+### 4. Configure environment variables
+Copy `.env.example` to `.env.local` and fill in your Supabase credentials:
+\`\`\`bash
+cp .env.example .env.local
+\`\`\`
+\`\`\`
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_publishable_key
+\`\`\`
+
+### 5. Run the development server
+\`\`\`bash
 npm run dev
-```
+\`\`\`
+Open [http://localhost:3000](http://localhost:3000)
 
-Open [http://localhost:3000](http://localhost:3000).
+## Database Schema
 
-## Data model (Supabase tables)
+**profiles** — id (uuid, FK to auth.users), username, level, xp, currency, streak_count, last_active_date
 
-- `profiles` — id, username, level, xp, currency, streak_count, last_active_date
-- `tasks` — id, user_id, title, attribute, xp_value, is_completed, completed_at
-- `attributes` — id, user_id, attribute_name, attribute_level, attribute_xp
-- `inventory` — id, user_id, item_name, item_type
+**tasks** — id, user_id (FK), title, attribute, xp_value, is_completed, completed_at
 
-## Project structure
+**attributes** — id, user_id (FK), attribute_name, attribute_level, attribute_xp
 
-```
-app/
-  login/page.js        Login screen (Supabase auth.signInWithPassword)
-  signup/page.js        Signup screen (Supabase auth.signUp + profile row)
-  dashboard/page.js    Profile summary, attributes
-  tasks/page.js         Quest list, XP/streak logic, level-up trigger
-  shop/page.js           Currency + inventory, cosmetic purchases
-components/
-  AuthField.jsx          Shared labeled input for login/signup
-  LevelUpCelebration.jsx  Reusable Framer Motion level-up modal
-lib/
-  supabaseClient.js      Supabase client init
-  gameLogic.js             Pure XP/leveling and streak functions
-```
+**inventory** — id, user_id (FK), item_name, item_type, purchased_at
 
 ## Team
 
-| Person | Area |
-|---|---|
-| Tisha | Backend, DB schema, auth, XP/streak logic (`lib/gameLogic.js`, Supabase wiring) |
-| Sankur | Frontend core (dashboard, task list), currency/shop backend logic |
-| Dipan | Login/signup + shop UI polish, level-up animation, accessibility, docs |
+- Tisha
+- Dipan
+- Sankur
 
-## Accessibility
-
-- All form inputs have associated `<label>` elements.
-- Errors and shop feedback are announced via `aria-live` regions instead of
-  blocking `alert()` popups.
-- The level-up modal traps focus, is dismissible with `Escape`, uses
-  `role="dialog"` + `aria-modal`, and respects `prefers-reduced-motion`.
-- All interactive elements get a visible focus ring (`.cozy-focusable` in
-  `globals.css`) for keyboard navigation.
-
-## Demo video
-
-90–180s walkthrough: login/signup → complete a quest → level-up animation →
-shop purchase.
+Built for Tech Zephyr 4.0 Hackathon.
