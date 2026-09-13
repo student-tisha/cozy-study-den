@@ -24,6 +24,10 @@ A gamified productivity app that turns your daily tasks into quests. Complete qu
 
 [cozy-study-den.vercel.app](https://cozy-study-den.vercel.app/)
 
+## Demo Video
+
+[Watch the walkthrough](https://drive.google.com/file/d/1H4mYW7W4rTxEMtZ0TlNWdXVKIw1a--mB/view?usp=drive_link)
+
 ## Setup Instructions
 
 ### 1. Clone the repository
